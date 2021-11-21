@@ -7,7 +7,7 @@ const OfferSellerDescription = ({ offer }) => {
 		<div id="seller" className="mt-4 offerSellerDescription" style={{ textAlign: 'left' }}>
 			<h2>Acerca del vendedor</h2>
 			<Container className="sellerDescriptionHeader" fluid>
-				<div className='mt-3' style={{width: '150px', height: '150px'}}>
+				<div className='mt-3' style={{width: '100px', height: '100px'}}>
 					<Image className="empImg" src={offer.empleadores[0].image} />
 				</div>
 				<p className="text-muted mt-2" style={{ fontWeight: 'bold' }}>

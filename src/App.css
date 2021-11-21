@@ -308,7 +308,8 @@
 
 .offerCarouselSlide {
 	width: 100%;
-	display: block ruby;
+	display: flex;
+justify-content: center;
 }
 
 .offerCarouselSlide .carousel-inner {
@@ -539,11 +540,14 @@
 		width: 100%;
 	}
 
+	.offer-wrapper {
+		padding-top: 10rem !important;
+	}
 	.card-img {
 		height: 50vw;
 	}
 	.filter-nav {
-		justify-content: flex-end;
+		justify-content: center;
 	}
 
 	.header-div {
@@ -701,6 +705,10 @@
 
 	.scrollButton {
 		display: none !important;
+	}
+
+	.filterNavbar {
+		flex-direction: column;
 	}
 }
 

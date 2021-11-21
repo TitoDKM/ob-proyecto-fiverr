@@ -35,7 +35,7 @@ const OfferHeader = ({ offer }) => {
 					<Carousel.Item>
 						<img
 							className="d-block w-100"
-							style={{ width: '100%', height: '30vw', objectFit: 'cover' }}
+							style={{ width: '100%', height: '50vw', objectFit: 'cover' }}
 							src={offer.image}
 							alt="First slide"
 						/>
