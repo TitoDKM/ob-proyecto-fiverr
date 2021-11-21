@@ -4,16 +4,17 @@
 	box-sizing: inherit;
 	margin: 0;
 	padding: 0;
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 	scroll-behavior: smooth;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
 }
-*:-webkit-scrollbar {
-	display: none;
+*::-webkit-scrollbar {
+	overflow: hidden;
 }
 
 .App {
-	min-height: 100%;
 	text-align: center;
 }
 
@@ -108,7 +109,9 @@
 
 .categoriesContainer {
 	display: flex;
-	align-items: center;
+	align-items: baseline;
+	justify-content: center;
+	width: 100%;
 }
 .categories-list-nav {
 	justify-content: start;
@@ -287,7 +290,6 @@
 }
 
 .bottomNavbar {
-	position: absolute;
 	width: 100%;
 }
 
@@ -301,6 +303,7 @@
 	font-weight: bold;
 	opacity: 0.7;
 	cursor: pointer;
+	display: none;
 }
 
 .offerCarouselSlide {
@@ -341,6 +344,10 @@
 	.home {
 		display: none !important;
 	}
+
+	.scrollButton {
+		display: block;
+	}
 }
 
 @media screen and (min-width: 660px) and (max-width: 990px) {
@@ -376,9 +383,6 @@
 
 	.card-img {
 		height: 50vw;
-	}
-	.filter-nav {
-		justify-content: center;
 	}
 
 	.header-div {

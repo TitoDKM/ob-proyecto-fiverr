@@ -5,10 +5,10 @@ import { useRef, useState  } from 'react';
 const CategoryNavbarComp = ({ categories, home }) => {
 	const {currentCategory} = useParams()
 	const container = useRef();
-	let btn = 0;
+	let btn;
 	const scroll = (scrollOffset) => {
-			container.current.scrollLeft += scrollOffset;
-	  };
+		btn = container.current.scrollLeft += scrollOffset;
+	};
 
 	return (
 		<div className="categoriesContainer" >

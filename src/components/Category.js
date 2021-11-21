@@ -114,6 +114,8 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 		else if (order === 'scoreLow') return first.promedio > second.promedio ? 1 : -1;
 	};
 
+	let i = 0;
+
 	const paginationItems = () => {
 		let items = [];
 		items.push(<Pagination.Prev key={0} disabled={currentPage === 1} onClick={() => setOffersForPage(currentPage-1)}/>);
@@ -172,7 +174,8 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 						.filter((offer) => (language !== '' ? filterByLanguage(offer) : offer))
 						.sort(orderOffers)
 						.map((offer) => {
-							return <CardComp key={offer.id} offer={offer} currentCategory={currentCategory} />;
+							i++;
+							return <CardComp key={offer.id} offer={offer} currentCategory={currentCategory} i={i} />;
 						})
 				) : loading ? (
 					<div

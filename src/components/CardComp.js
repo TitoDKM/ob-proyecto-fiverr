@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import LazyLoad from 'react-lazyload';
 
-const CardComp = ({ offer, currentCategory }) => {
+const CardComp = ({ offer, currentCategory, i }) => {
 	const setImage = () => {
 		if (offer.empleadores.length > 0) return offer.empleadores[0].image;
 		return 'undefined';
@@ -26,7 +26,7 @@ const CardComp = ({ offer, currentCategory }) => {
 			style={{ textDecoration: 'none', color: 'inherit' }}
 		>
 			<LazyLoad height="100%" offset={600}>
-				<Card.Img variant="top" className="mh-100 card-img" src={offer.image} />
+				<Card.Img variant="top" className="mh-100 card-img" src={offer.image + i} />
 			</LazyLoad>
 			<Card.Body
 				style={{
