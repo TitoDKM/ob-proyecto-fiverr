@@ -7,9 +7,10 @@ const CategoryNavbarComp = ({ categories, home }) => {
 	const container = useRef();
 	let btn = 0;
 	const scroll = (scrollOffset) => {
-		btn = container.current.scrollLeft += scrollOffset;
-	};
+			btn = container.current.scrollLeft += scrollOffset;
+	  };
 
+	
 	return (
 		<div className="categoriesContainer" >
 		<div className="scrollButton m-3" style={{ color: home ?  'white' : 'black' }}  onClick={() => scroll(-100)}>{'<'}</div>
@@ -34,7 +35,7 @@ const CategoryNavbarComp = ({ categories, home }) => {
 				else return null
 			})}
 		</ButtonGroup>
-		<div className="scrollButton m-3" style={{ color: home ?  'white' : 'black' }} onClick={() => scroll(100)}>{'>'}</div>
+		<div className="scrollButton m-3" style={{ color: home ?  'white' : 'black'}} onClick={() => scroll(100)}>{'>'}</div>
 		</div>
 	);
 };

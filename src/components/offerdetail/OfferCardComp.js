@@ -22,7 +22,7 @@ const OfferCardComp = ({ offer, currentCategory }) => {
 			return "undefined"
 	}
 	return (
-		<Card className="m-3 card" as={Link} to={`/categorias/${currentCategory}/ofertas/${offer.id}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%' }}>
+		<Card className="m-3 card" as={Link} to={`/categorias/${currentCategory}/ofertas/${offer.id}`} style={{ textDecoration: 'none', color: 'inherit', width: '100%', zIndex: '4' }}>
 			<Card.Img
 				variant="top"
 				className="mh-100 card-img"

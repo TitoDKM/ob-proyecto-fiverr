@@ -49,10 +49,12 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 						if(details.length > ELEMENTS_PER_PAGE) {
 							setOffersPages(Math.ceil(details.length / ELEMENTS_PER_PAGE));
 							setCurrentOffers(details.slice(0, ELEMENTS_PER_PAGE));
+						} else {
+							setOffersPages(1);
 						}
+						setCurrentPage(1);
 						setLoading(false);
 					}
-
 					setLoading(false);
 				} else {
 					let response = await fetch(
@@ -67,6 +69,13 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 						const details = await responseData.json();
 						setoffers(details);
 						setCurrentOffers(details);
+						if(details.length > ELEMENTS_PER_PAGE) {
+							setOffersPages(Math.ceil(details.length / ELEMENTS_PER_PAGE));
+							setCurrentOffers(details.slice(0, ELEMENTS_PER_PAGE));
+						} else {
+							setOffersPages(1);
+						}
+						setCurrentPage(1);
 						setLoading(false);
 					}
 				}
@@ -74,6 +83,27 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 		},
 		[ token, currentCategory ]
 	);
+
+	useEffect(() => {
+		if(searchTerm !== '') {
+			const searchItems = offers.filter((offer) => {
+				if (searchTerm === '') return offer;
+				else if (offer.nombre.toLowerCase().includes(searchTerm.toLowerCase())) return offer;
+				else if (offer.empleadores[0].nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+					return offer;
+				else return null;
+			});
+			if(searchItems.length > ELEMENTS_PER_PAGE) {
+				setOffersPages(Math.ceil(searchItems.length / ELEMENTS_PER_PAGE));
+				setCurrentOffers(searchItems.slice(0, ELEMENTS_PER_PAGE));
+			} else {
+				setOffersPages(1);
+			}
+			setCurrentPage(1);
+		} else {
+			resetPagination();
+		}
+	}, [searchTerm]);
 
 	const applyFilter = (newFilter) => {
 		if (newFilter === filter) setFilter('');
@@ -116,20 +146,42 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 
 	let i = 0;
 
+	const resetPagination = () => {
+		if(offers.length > ELEMENTS_PER_PAGE) {
+			setOffersPages(Math.ceil(offers.length / ELEMENTS_PER_PAGE));
+			setCurrentOffers(offers.slice(0, ELEMENTS_PER_PAGE));
+		} else {
+			setOffersPages(1);
+		}
+		setCurrentPage(1);
+	}
+	
 	const paginationItems = () => {
 		let items = [];
 		items.push(<Pagination.Prev key={0} disabled={currentPage === 1} onClick={() => setOffersForPage(currentPage-1)}/>);
 		for(let i = 0; i < offersPages; i++) {
-			items.push(<Pagination.Item key={i+1} active={currentPage == i+1} onClick={() => setOffersForPage(i+1)}>{i+1}</Pagination.Item>);
+			items.push(<Pagination.Item key={i+1} active={currentPage === i+1} onClick={() => setOffersForPage(i+1)}>{i+1}</Pagination.Item>);
 		}
 		items.push(<Pagination.Next key={offersPages+1} disabled={currentPage === offersPages} onClick={() => setOffersForPage(currentPage+1)}/>);
 		return items;
 	}
 
 	const setOffersForPage = (page) => {
-		const fromIndex = ELEMENTS_PER_PAGE * (page - 1);
+		const fromIndex = (ELEMENTS_PER_PAGE) * (page - 1);
 		const toIndex = fromIndex + ELEMENTS_PER_PAGE;
-		setCurrentOffers(offers.slice(fromIndex, toIndex));
+		setCurrentOffers(offers.filter((offer) => {
+			if (searchTerm === '') return offer;
+			else if (offer.nombre.toLowerCase().includes(searchTerm.toLowerCase())) return offer;
+			else if (offer.empleadores[0].nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+				return offer;
+			else return null;
+		})
+		.filter((offer) => (min !== -1 && max !== -1 ? filterByPrice(offer) : offer))
+		.filter((offer) => (countries !== 'todos' ? filterByCountry(offer) : offer))
+		.filter((offer) => (sellerRank !== '' ? filterBySellerRank(offer) : offer))
+		.filter((offer) => (language !== '' ? filterByLanguage(offer) : offer))
+		.sort(orderOffers)
+		.slice(fromIndex, toIndex));
 		setCurrentPage(page);
 	}
 
@@ -175,7 +227,7 @@ const Category = ({ setSearchTerm, searchTerm }) => {
 						.sort(orderOffers)
 						.map((offer) => {
 							i++;
-							return <CardComp key={offer.id} offer={offer} currentCategory={currentCategory} i={i} />;
+							return <CardComp key={offer.id} offer={offer} currentCategory={currentCategory} i ={i} />;
 						})
 				) : loading ? (
 					<div
